@@ -5,35 +5,29 @@
 var Hoek = require('hoek');
 var Fs = require('fs');
 var Optimist = require('optimist');
-//var Http = require('http');
 var Nipple = require('nipple');
 var Url = require('url');
 
 // Declare internals
 
 var internals = {};
-internals.argv = Optimist.usage('Usage: $0 -l log.json -u url -n Concurrent Requests')
+internals.argv = Optimist.usage('Usage: $0 -l log.json -u url')
                     .demand(['l', 'u'])
                     .argv;
 
 internals.getLog = function () {
 
-    //var log = null;
     var log = [];
     var logPath = internals.argv.l[0] !== '/' ? process.cwd() + '/' + internals.argv.l : internals.argv.l;
     var logFile = Fs.readFileSync(logPath, 'utf8').split('\n');
-    //log = JSON.parse('[' + logFile.toString().split('\n').join(',') + ']');
-    //console.log(logFile);
     return logFile;
 }
 
 internals.parseUrls = function (options, entries) {
     
     internals.urls = [];
-    //for (var i = 0, il = entries.length; i < il; ++i) {
-    // need to figure out why last [] entry and strip
     for (var i = 0, il = entries.length; i < il-1; ++i) {
-        //console.log(i);
+
         var url = Hoek.clone(options);
         var entry = JSON.parse(entries[i]);
         if (entry.event === 'request' && entry.method === 'get') {
@@ -45,7 +39,7 @@ internals.parseUrls = function (options, entries) {
                 url.headers = {};
 
                 if (entry.log) {
-                    //console.log(entry.log); 
+
                     for (var ei = 0, eil = entry.log.length; ei < eil; ++ei) {
 
                         var log = entry.log[ei];
@@ -64,29 +58,11 @@ internals.parseUrls = function (options, entries) {
                         }
                     }
                 }
-
                 internals.urls.push(url);
             }
         }
     }
 };
-
-//internals.handleResponse = function (response) {
-
-//    response.once('data', function () { });
-
-//    response.once('error', function () {
-
-//        Hoek.abort('error for: ' + response.req.path);
-//        response.destroy();
-//    });
-
-//    response.once('finish', function () {
-
-//        internals.makeRequest();
-//    });
-//};
-
 
 internals.makeRequest = function () {
 
@@ -100,10 +76,6 @@ internals.makeRequest = function () {
         url = internals.urls.pop();
     }
 
-//    var req = Http.get(url, function (res) {
-
-//        internals.handleResponse(res);
-//    });
     var options = {
         rejectUnauthorized: false
     };
@@ -113,34 +85,16 @@ internals.makeRequest = function () {
 
             console.log(err);
         }
-// not sure this else is really required
-        else {
-//            console.log(res);
-
-            internals.makeRequest();
-        }
-    });
-
-//    req.once('error', function (err) {
-
-//        console.log(err);
-//        internals.makeRequest();
-//    });
-
-//    req.once('finish', function () {
-
-//        internals.makeRequest();
-//    });
+//        console.log(res);
+   });
 };
 
 
 internals.makeRequests = function () {
 
-//    Http.globalAgent.maxSockets = internals.availableSockets;
     console.log('Total requests to make: ' + internals.urls.length);
     console.log('Making requests...');
-
-    for (var i = 0, il = (internals.urls.length > internals.availableSockets ? internals.availableSockets : internals.urls.length); i < il; ++i) {
+    for (var i = 0, il = internals.urls.length; i < il; ++i) {
 
         internals.makeRequest();
     }
@@ -149,7 +103,6 @@ internals.makeRequests = function () {
 
 internals.start = function () {
 
-    internals.availableSockets = internals.argv.n ? parseInt(internals.argv.n) : 10;
     var log = internals.getLog();
     internals.parseUrls(Url.parse(internals.argv.u), log);
     internals.makeRequests();

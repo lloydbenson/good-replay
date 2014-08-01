@@ -9,4 +9,4 @@
 
 good-replay includes a _'replay'_ script that is capable of replaying any request events found in a log file.  Below is the command to use to execute _'replay'_:
 
-`replay -l log.json -u host -n #_of_concurrent_requests`
+`replay -l log.json -u https://myhost.com`
