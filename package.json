@@ -1,0 +1,35 @@
+{
+  "name": "good-replay",
+  "description": "script to replay good request logs",
+  "version": "0.0.1",
+  "repository": "git://github.com/spumko/good-replay",
+  "main": "index",
+  "keywords": [
+    "hapi",
+    "plugin"
+  ],
+  "engines": {
+    "node": "0.10.x"
+  },
+  "dependencies": {
+    "hoek": "2.x.x",
+    "nipple": "2.x.x",
+    "optimist": "0.6.x"
+  },
+  "peerDependencies": {
+    "hapi": ">=2.x.x"
+  },
+  "devDependencies": {
+    "hapi": "6.x.x",
+    "lab": "3.x.x"
+  },
+  "scripts": {
+    "test": "make test-cov"
+  },
+  "licenses": [
+    {
+      "type": "BSD",
+      "url": "http://github.com/spumko/good-replay/raw/master/LICENSE"
+    }
+  ]
+}
