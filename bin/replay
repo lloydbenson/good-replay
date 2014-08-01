@@ -6,6 +6,7 @@ var Hoek = require('hoek');
 var Fs = require('fs');
 var Optimist = require('optimist');
 var Nipple = require('nipple');
+var Readline = require('readline');
 var Url = require('url');
 
 // Declare internals
@@ -19,17 +20,25 @@ internals.getLog = function () {
 
     var log = [];
     var logPath = internals.argv.l[0] !== '/' ? process.cwd() + '/' + internals.argv.l : internals.argv.l;
-    var logFile = Fs.readFileSync(logPath, 'utf8').split('\n');
-    return logFile;
+    var logStream = Fs.createReadStream(logPath, { encoding: 'utf8' });
+    return logStream;
 }
 
-internals.parseUrls = function (options, entries) {
+internals.parseUrls = function (options, logstream) {
     
     internals.urls = [];
-    for (var i = 0, il = entries.length; i < il-1; ++i) {
+    var rd = Readline.createInterface({
+        input: logstream,
+        output: process.stdout,
+        terminal: false
+    });
+    var logcnt = 0;
+    console.log('processing ' + internals.argv.l);
+ 
+    rd.on('line', function(line) {
 
         var url = Hoek.clone(options);
-        var entry = JSON.parse(entries[i]);
+        var entry = JSON.parse(line);
         if (entry.event === 'request' && entry.method === 'get') {
 
             if (entry.path) {
@@ -58,23 +67,28 @@ internals.parseUrls = function (options, entries) {
                         }
                     }
                 }
-                internals.urls.push(url);
+//                internals.urls.push(url);
+                internals.makeRequest(url);
+                logcnt++;
             }
         }
-    }
+    });
+    rd.on('close', function() {
+        console.log('processed ' + logcnt + ' entries.');
+    });
 };
 
-internals.makeRequest = function () {
+internals.makeRequest = function (url) {
 
-    var url = internals.urls.pop();
+//    var url = internals.urls.pop();
 
-    while (!url) {
-        if (!internals.urls.length) {
-            return;
-        }
+//    while (!url) {
+//        if (!internals.urls.length) {
+//            return;
+//        }
 
-        url = internals.urls.pop();
-    }
+//        url = internals.urls.pop();
+//    }
 
     var options = {
         rejectUnauthorized: false
@@ -85,27 +99,27 @@ internals.makeRequest = function () {
 
             console.log(err);
         }
-//        console.log(res);
+        //console.log(res);
    });
 };
 
 
-internals.makeRequests = function () {
+//internals.makeRequests = function () {
 
-    console.log('Total requests to make: ' + internals.urls.length);
-    console.log('Making requests...');
-    for (var i = 0, il = internals.urls.length; i < il; ++i) {
+//    console.log('Total requests to make: ' + internals.urls.length);
+//    console.log('Making requests...');
+//    for (var i = 0, il = internals.urls.length; i < il; ++i) {
 
-        internals.makeRequest();
-    }
-};
+//        internals.makeRequest();
+//    }
+//};
 
 
 internals.start = function () {
 
     var log = internals.getLog();
     internals.parseUrls(Url.parse(internals.argv.u), log);
-    internals.makeRequests();
+//    internals.makeRequests();
 };
 
 internals.start();
