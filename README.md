@@ -5,6 +5,8 @@
 
 [![Build Status](https://secure.travis-ci.org/spumko/good.png)](http://travis-ci.org/spumko/good-replay)
 
+Lead Maintainer: [Lloyd Benson](https://github.com/lloydbenson)
+
 ### Replaying request logs
 
 good-replay includes a _'replay'_ script that is capable of replaying any request events found in a log file.  Below is the command to use to execute _'replay'_:
