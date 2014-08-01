@@ -1,9 +1,9 @@
-<a href="https://github.com/spumko"><img src="https://raw.github.com/spumko/spumko/master/images/from.png" align="right" /></a>
-![good Logo](https://raw.github.com/spumko/good/master/images/good.png)
+<a href="https://github.com/hapijs"><img src="https://raw.github.com/hapijs/hapijs/master/images/from.png" align="right" /></a>
+![good Logo](https://raw.github.com/hapijs/good/master/images/good.png)
 
-[**hapi**](https://github.com/spumko/hapi) process monitoring
+[**hapi**](https://github.com/hapijs/hapi) process monitoring
 
-[![Build Status](https://secure.travis-ci.org/spumko/good.png)](http://travis-ci.org/spumko/good-replay)
+[![Build Status](https://secure.travis-ci.org/hapijs/good.png)](http://travis-ci.org/hapijs/good-replay)
 
 Lead Maintainer: [Lloyd Benson](https://github.com/lloydbenson)
 
