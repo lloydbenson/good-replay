@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 // Load modules
-
 var Hoek = require('hoek');
 var Fs = require('fs');
 var Optimist = require('optimist');
@@ -27,7 +26,7 @@ internals.getLog = function () {
 internals.parseUrls = function (options, logstream) {
     
     internals.urls = [];
-    var rd = Readline.createInterface({
+    var readline = Readline.createInterface({
         input: logstream,
         output: process.stdout,
         terminal: false
@@ -35,7 +34,7 @@ internals.parseUrls = function (options, logstream) {
     var logcnt = 0;
     console.log('processing ' + internals.argv.l);
  
-    rd.on('line', function(line) {
+    readline.on('line', function(line) {
 
         var url = Hoek.clone(options);
         var entry = JSON.parse(line);
@@ -67,28 +66,17 @@ internals.parseUrls = function (options, logstream) {
                         }
                     }
                 }
-//                internals.urls.push(url);
                 internals.makeRequest(url);
                 logcnt++;
             }
         }
     });
-    rd.on('close', function() {
+    readline.on('close', function() {
         console.log('processed ' + logcnt + ' entries.');
     });
 };
 
 internals.makeRequest = function (url) {
-
-//    var url = internals.urls.pop();
-
-//    while (!url) {
-//        if (!internals.urls.length) {
-//            return;
-//        }
-
-//        url = internals.urls.pop();
-//    }
 
     var options = {
         rejectUnauthorized: false
@@ -99,27 +87,13 @@ internals.makeRequest = function (url) {
 
             console.log(err);
         }
-        //console.log(res);
    });
 };
-
-
-//internals.makeRequests = function () {
-
-//    console.log('Total requests to make: ' + internals.urls.length);
-//    console.log('Making requests...');
-//    for (var i = 0, il = internals.urls.length; i < il; ++i) {
-
-//        internals.makeRequest();
-//    }
-//};
-
 
 internals.start = function () {
 
     var log = internals.getLog();
     internals.parseUrls(Url.parse(internals.argv.u), log);
-//    internals.makeRequests();
 };
 
 internals.start();
