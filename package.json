@@ -2,7 +2,7 @@
   "name": "good-replay",
   "description": "script to replay good request logs",
   "version": "0.0.1",
-  "repository": "git://github.com/spumko/good-replay",
+  "repository": "git://github.com/hapijs/good-replay",
   "main": "index",
   "keywords": [
     "hapi",
@@ -29,7 +29,7 @@
   "licenses": [
     {
       "type": "BSD",
-      "url": "http://github.com/spumko/good-replay/raw/master/LICENSE"
+      "url": "http://github.com/hapijs/good-replay/raw/master/LICENSE"
     }
   ]
 }
