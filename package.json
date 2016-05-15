@@ -1,7 +1,7 @@
 {
   "name": "good-replay",
   "description": "script to replay good request logs",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "repository": "git://github.com/hapijs/good-replay",
   "main": "index",
   "keywords": [

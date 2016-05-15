@@ -1,14 +1,7 @@
-<a href="https://github.com/hapijs"><img src="https://raw.github.com/hapijs/hapijs/master/images/from.png" align="right" /></a>
-![good Logo](https://raw.github.com/hapijs/good/master/images/good.png)
+![RIP](https://github.com/hapijs/good-replay/raw/master/images/rip.png)
 
-[**hapi**](https://github.com/hapijs/hapi) process monitoring
 
-[![Build Status](https://secure.travis-ci.org/hapijs/good.png)](http://travis-ci.org/hapijs/good-replay)
+# No longer being maintained
+This module is no longer being maintained. There will be no future releases.
 
-Lead Maintainer: [Lloyd Benson](https://github.com/lloydbenson)
-
-### Replaying request logs
-
-good-replay includes a _'replay'_ script that is capable of replaying any request events found in a log file.  Below is the command to use to execute _'replay'_:
-
-`replay -l log.json -u https://myhost.com`
+Previous [README.md](https://github.com/hapijs/good-replay/blob/v0.0.1/README.md)
